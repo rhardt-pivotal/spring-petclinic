@@ -15,15 +15,13 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.springframework.http.MediaType;
 import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -79,7 +77,7 @@ class OwnerController {
 		return "owners/findOwners";
 	}
 
-	@GetMapping("/owners")
+	@GetMapping(path = "/owners", produces = MediaType.TEXT_HTML_VALUE)
 	public String processFindForm(Owner owner, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /owners to return all records
@@ -104,6 +102,11 @@ class OwnerController {
 			model.put("selections", results);
 			return "owners/ownersList";
 		}
+	}
+
+	@GetMapping(value = "/owners", produces = "application/json")
+	public Collection<Owner> ownersJson() {
+		return this.owners.findAll();
 	}
 
 	@GetMapping("/owners/{ownerId}/edit")

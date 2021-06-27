@@ -46,6 +46,10 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	@Transactional(readOnly = true)
 	Collection<Owner> findByLastName(@Param("lastName") String lastName);
 
+	@Query("SELECT DISTINCT owner FROM Owner owner")
+	@Transactional(readOnly = true)
+	Collection<Owner> findAll();
+
 	/**
 	 * Retrieve an {@link Owner} from the data store by id.
 	 * @param id the id to search for
@@ -59,6 +63,6 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	 * Save an {@link Owner} to the data store, either inserting or updating it.
 	 * @param owner the {@link Owner} to save
 	 */
-	void save(Owner owner);
+	Owner save(Owner owner);
 
 }

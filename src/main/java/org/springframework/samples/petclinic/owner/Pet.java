@@ -31,6 +31,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -58,6 +59,7 @@ public class Pet extends NamedEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
+	@JsonIgnore
 	private Owner owner;
 
 	@Transient
